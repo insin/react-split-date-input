@@ -154,17 +154,17 @@ var SplitDateInput = React.createClass({
         <datalist id={name + '-months'}>
           {MONTH_NAMES.map(month => <option value={month} key={month}/>)}
         </datalist>
-        <input type="text" name={name + '_month'} value={this.state.monthText} onChange={this.onMonthChange} onBlur={this.onMonthBlur} list={name + '-months'} tabIndex="1"/>
+        <input type="text" name={name + '_month'} value={this.state.monthText} onChange={this.onMonthChange} onBlur={this.onMonthBlur} list={name + '-months'} tabIndex="1" maxLength="3"/>
         <button type="button" onClick={this.decreaseMonth} tabIndex="2">-</button>
       </div>
       <div className="SplitDateInput__part SplitDateInput__day">
         <button type="button" onClick={this.increaseDay} tabIndex="3">+</button>
-        <input type="text" name={name + '_day'} value={this.state.dayText} onChange={this.onDayChange} onBlur={this.onDayBlur} tabIndex="1"/>
+        <input type="text" name={name + '_day'} value={this.state.dayText} onChange={this.onDayChange} onBlur={this.onDayBlur} tabIndex="1" maxLength="2"/>
         <button type="button" onClick={this.decreaseDay} tabIndex="3">-</button>
       </div>
       <div className="SplitDateInput__part SplitDateInput__year">
         <button type="button" onClick={this.increaseYear} tabIndex="4">+</button>
-        <input type="text" name={name + '_year'} value={this.state.yearText} onChange={this.onYearChange} onBlur={this.onYearBlur} tabIndex="1"/>
+        <input type="text" name={name + '_year'} value={this.state.yearText} onChange={this.onYearChange} onBlur={this.onYearBlur} tabIndex="1" maxLength="4"/>
         <button type="button" onClick={this.decreaseYear} tabIndex="4">-</button>
       </div>
     </div>
