@@ -215,7 +215,7 @@ var SplitDateInput = React.createClass({
         <datalist id={`${name}-months`}>
           {MONTH_NAMES.map(month => <option value={month} key={month}/>)}
         </datalist>
-        <input type="text" name={`S{name}_month`} value={monthText}
+        <input type="text" name={`S{name}_month`} value={monthText} size="3"
           onFocus={this.onInputFocus} onKeyDown={this.onMonthKeyDown}
           onChange={this.onMonthChange} onBlur={this.onMonthBlur}
           tabIndex="0" maxLength="3" autoComplete="off" list={`${name}-months`}
@@ -230,7 +230,7 @@ var SplitDateInput = React.createClass({
         {showButtons && <button type="button" onClick={this.increaseDay} tabIndex="-1">
           +
         </button>}
-        <input type="text" name={`S{name}_day`} value={dayText}
+        <input type="text" name={`S{name}_day`} value={dayText} size="2"
           onFocus={this.onInputFocus} onKeyDown={this.onDayKeyDown}
           onChange={this.onDayChange} onBlur={this.onDayBlur}
           tabIndex="0" maxLength="2" autoComplete="off"
@@ -245,12 +245,12 @@ var SplitDateInput = React.createClass({
         {showButtons && <button type="button" onClick={this.increaseYear} tabIndex="-1">
           +
         </button>}
-        <input type="text" name={`S{name}_year`} value={yearText}
+        <input type="text" name={`S{name}_year`} value={yearText} size="4"
           onFocus={this.onInputFocus} onKeyDown={this.onYearKeyDown}
           onChange={this.onYearChange} onBlur={this.onYearBlur}
           tabIndex="0" maxLength="4" autoComplete="off"
           role="spinbutton" aria-label="Year" aria-valuenow={year}
-          aria-valuemin="-271820" aria-valuemax="275759"
+          aria-valuemin="-999" aria-valuemax="9999"
         />
         {showButtons && <button type="button" onClick={this.decreaseYear} tabIndex="-1">
           −
