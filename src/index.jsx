@@ -35,10 +35,13 @@ var SplitDateInput = React.createClass({
     }
     return {
       month: date.getMonth()
-    , monthText: MONTH_NAMES[date.getMonth()]
-    , day: date.getDate()
-    , dayText: String(date.getDate())
     , year: date.getFullYear()
+    , day: date.getDate()
+    // Separate *Text state for input values allow the user to type whatever
+    // they want, including invalid values. If an invalid value is present
+    // onBlur, we will replace it.
+    , monthText: MONTH_NAMES[date.getMonth()]
+    , dayText: String(date.getDate())
     , yearText: String(date.getFullYear())
     }
   },
