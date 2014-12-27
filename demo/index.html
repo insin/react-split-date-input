@@ -31,6 +31,10 @@
   .SplitDateInput__part input {
     border: none;
   }
+  /* Hide the <datalist> dropdown arrow in Chrome */
+  .SplitDateInput__part input::-webkit-calendar-picker-indicator {
+    display: none;
+  }
   </style>
 </head>
 <body>
