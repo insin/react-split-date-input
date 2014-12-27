@@ -20,12 +20,14 @@ var SplitDateInput = React.createClass({
   propTypes: {
     name: React.PropTypes.string
   , onChange: React.PropTypes.func.isRequired
+  , noButtons: React.PropTypes.bool
   , value: React.PropTypes.instanceOf(Date)
   },
 
   getDefaultProps() {
     return {
       name: 'splitDateInput'
+    , noButtons: false
     }
   },
 
@@ -201,37 +203,58 @@ var SplitDateInput = React.createClass({
   },
 
   render() {
-    var name = this.props.name
+    var {name, noButtons} = this.props
+    var {monthText, month, dayText, day, yearText, year} = this.state
+    var showButtons = !noButtons
+    var daysInCurrentMonth = daysInMonth(month, year)
     return <div className="SplitDateInput">
       <div className="SplitDateInput__part SplitDateInput__month">
-        <button type="button" onClick={this.increaseMonth} tabIndex="2">+</button>
+        {showButtons && <button type="button" onClick={this.increaseMonth} tabIndex="-1">
+          +
+        </button>}
         <datalist id={`${name}-months`}>
           {MONTH_NAMES.map(month => <option value={month} key={month}/>)}
         </datalist>
-        <input type="text" name={`S{name}_month`} value={this.state.monthText}
+        <input type="text" name={`S{name}_month`} value={monthText}
           onFocus={this.onInputFocus} onKeyDown={this.onMonthKeyDown}
           onChange={this.onMonthChange} onBlur={this.onMonthBlur}
-          list={`${name}-months`} tabIndex="1" maxLength="3" autoComplete="off"
+          tabIndex="0" maxLength="3" autoComplete="off" list={`${name}-months`}
+          role="spinbutton" aria-label="Month" aria-valuenow={month}
+          aria-valuetext={monthText} aria-valuemin="0" aria-valuemax="11"
         />
-        <button type="button" onClick={this.decreaseMonth} tabIndex="2">−</button>
+        {showButtons && <button type="button" onClick={this.decreaseMonth} tabIndex="-1">
+          −
+        </button>}
       </div>
       <div className="SplitDateInput__part SplitDateInput__day">
-        <button type="button" onClick={this.increaseDay} tabIndex="3">+</button>
-        <input type="text" name={`S{name}_day`} value={this.state.dayText}
+        {showButtons && <button type="button" onClick={this.increaseDay} tabIndex="-1">
+          +
+        </button>}
+        <input type="text" name={`S{name}_day`} value={dayText}
           onFocus={this.onInputFocus} onKeyDown={this.onDayKeyDown}
           onChange={this.onDayChange} onBlur={this.onDayBlur}
-          tabIndex="1" maxLength="2" autoComplete="off"
+          tabIndex="0" maxLength="2" autoComplete="off"
+          role="spinbutton" aria-label="Day" aria-valuenow={day}
+          aria-valuemin="1" aria-valuemax={daysInCurrentMonth}
         />
-        <button type="button" onClick={this.decreaseDay} tabIndex="3">−</button>
+        {showButtons && <button type="button" onClick={this.decreaseDay} tabIndex="-1">
+          −
+        </button>}
       </div>
       <div className="SplitDateInput__part SplitDateInput__year">
-        <button type="button" onClick={this.increaseYear} tabIndex="4">+</button>
-        <input type="text" name={`S{name}_year`} value={this.state.yearText}
+        {showButtons && <button type="button" onClick={this.increaseYear} tabIndex="-1">
+          +
+        </button>}
+        <input type="text" name={`S{name}_year`} value={yearText}
           onFocus={this.onInputFocus} onKeyDown={this.onYearKeyDown}
           onChange={this.onYearChange} onBlur={this.onYearBlur}
-          tabIndex="1" maxLength="4" autoComplete="off"
+          tabIndex="0" maxLength="4" autoComplete="off"
+          role="spinbutton" aria-label="Year" aria-valuenow={year}
+          aria-valuemin="-271820" aria-valuemax="275759"
         />
-        <button type="button" onClick={this.decreaseYear} tabIndex="4">−</button>
+        {showButtons && <button type="button" onClick={this.decreaseYear} tabIndex="-1">
+          −
+        </button>}
       </div>
     </div>
   }

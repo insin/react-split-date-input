@@ -57,18 +57,25 @@
 var App = React.createClass({
   getInitialState() {
     return {
-      date: new Date()
+      date1: new Date()
+    , date2: new Date()
     }
   },
 
-  onDateChanged(date) {
-    this.setState({date})
+  onDateChanged(stateProp, date) {
+    var stateChange = {}
+    stateChange[stateProp] = date
+    this.setState(stateChange)
   },
 
   render() {
     return <div>
-      {this.state.date.toDateString()}
-      <SplitDateInput value={this.state.date} onChange={this.onDateChanged}/>
+      <h4>Default</h4>
+      {this.state.date1.toDateString()}
+      <SplitDateInput value={this.state.date1} onChange={this.onDateChanged.bind(this, 'date1')}/>
+      <h4><code>noButtons</code> prop</h4>
+      {this.state.date2.toDateString()}
+      <SplitDateInput noButtons value={this.state.date2} onChange={this.onDateChanged.bind(this, 'date2')}/>
     </div>
   }
 })
