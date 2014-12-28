@@ -51,10 +51,6 @@ var SplitDateInput = React.createClass({
   // Shared
   // ======
 
-  onInputFocus(e) {
-    e.target.select()
-  },
-
   triggerChange() {
     var {year, month, day} = this.state
     this.props.onChange(new Date(year, month, day))
@@ -216,8 +212,7 @@ var SplitDateInput = React.createClass({
           {MONTH_NAMES.map(month => <option value={month} key={month}/>)}
         </datalist>
         <input type="text" name={`S{name}_month`} value={monthText} size="3"
-          onFocus={this.onInputFocus} onKeyDown={this.onMonthKeyDown}
-          onChange={this.onMonthChange} onBlur={this.onMonthBlur}
+          onKeyDown={this.onMonthKeyDown} onChange={this.onMonthChange} onBlur={this.onMonthBlur}
           tabIndex="0" maxLength="3" autoComplete="off" list={`${name}-months`}
           role="spinbutton" aria-label="Month" aria-valuenow={month}
           aria-valuetext={monthText} aria-valuemin="0" aria-valuemax="11"
@@ -231,8 +226,7 @@ var SplitDateInput = React.createClass({
           +
         </button>}
         <input type="text" name={`S{name}_day`} value={dayText} size="2"
-          onFocus={this.onInputFocus} onKeyDown={this.onDayKeyDown}
-          onChange={this.onDayChange} onBlur={this.onDayBlur}
+          onKeyDown={this.onDayKeyDown} onChange={this.onDayChange} onBlur={this.onDayBlur}
           tabIndex="0" maxLength="2" autoComplete="off"
           role="spinbutton" aria-label="Day" aria-valuenow={day}
           aria-valuemin="1" aria-valuemax={daysInCurrentMonth}
@@ -246,8 +240,7 @@ var SplitDateInput = React.createClass({
           +
         </button>}
         <input type="text" name={`S{name}_year`} value={yearText} size="4"
-          onFocus={this.onInputFocus} onKeyDown={this.onYearKeyDown}
-          onChange={this.onYearChange} onBlur={this.onYearBlur}
+          onKeyDown={this.onYearKeyDown} onChange={this.onYearChange} onBlur={this.onYearBlur}
           tabIndex="0" maxLength="4" autoComplete="off"
           role="spinbutton" aria-label="Year" aria-valuenow={year}
           aria-valuemin="-999" aria-valuemax="9999"
