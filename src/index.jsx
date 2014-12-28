@@ -207,7 +207,7 @@ var SplitDateInput = React.createClass({
     var {monthText, month, dayText, day, yearText, year} = this.state
     var showButtons = !noButtons
     var daysInCurrentMonth = daysInMonth(month, year)
-    return <div className="SplitDateInput">
+    return <div className={`SplitDateInput SplitDateInput--${noButtons ? 'no' : ''}buttons`}>
       <div className="SplitDateInput__part SplitDateInput__month">
         {showButtons && <button type="button" onClick={this.increaseMonth} tabIndex="-1">
           +
