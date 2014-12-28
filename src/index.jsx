@@ -117,28 +117,38 @@ var SplitDateInput = React.createClass({
   // Day
   // ===
 
-  increaseDay() {
-    var day = (this.state.day === daysInMonth(this.state.month, this.state.year)
-               ? 1
-               : this.state.day + 1)
+  setDay(day) {
     this.setState({day, dayText: String(day)}, this.triggerChange)
+  },
+
+  increaseDay() {
+    this.setDay(this.state.day === daysInMonth(this.state.month, this.state.year)
+                ? 1
+                : this.state.day + 1)
   },
 
   decreaseDay() {
-    var day = (this.state.day === 1
-               ? daysInMonth(this.state.month, this.state.year)
-               : this.state.day - 1)
-    this.setState({day, dayText: String(day)}, this.triggerChange)
+    this.setDay(this.state.day === 1
+                ? daysInMonth(this.state.month, this.state.year)
+                : this.state.day - 1)
   },
 
   onDayKeyDown(e) {
-    if (e.key == 'ArrowUp') {
+    var key = e.key
+    if (key == 'ArrowDown' || key == 'ArrowUp' || key =='End' || key == 'Home') {
       e.preventDefault()
-      this.increaseDay()
-    }
-    else if (e.key == 'ArrowDown') {
-      e.preventDefault()
-      this.decreaseDay()
+      if (key == 'ArrowDown') {
+        this.decreaseDay()
+      }
+      else if (key == 'ArrowUp') {
+        this.increaseDay()
+      }
+      else if (key == 'End') {
+        this.setDay(daysInMonth(this.state.month, this.state.year))
+      }
+      else if (key == 'Home') {
+        this.setDay(1)
+      }
     }
   },
 
@@ -146,7 +156,7 @@ var SplitDateInput = React.createClass({
     var dayText = e.target.value
     if (/^(?:0?[1-9]|[12][0-9]|3[01])$/.test(dayText) &&
         Number(dayText) <= daysInMonth(this.state.month, this.state.year)) {
-      this.setState({day: Number(dayText), dayText}, this.triggerChange)
+      this.setDay(Number(dayText))
     }
     else {
       this.setState({dayText})
