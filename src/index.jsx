@@ -172,35 +172,42 @@ var SplitDateInput = React.createClass({
   // Year
   // ====
 
-  increaseYear() {
-    var year = this.state.year + 1
+ setYear(year) {
     var day = this.getAdjustedDay(this.state.month, year)
     this.setState({day, dayText: String(day), year, yearText: String(year)}, this.triggerChange)
   },
 
-  decreaseYear() {
-    var year = this.state.year - 1
-    var day = this.getAdjustedDay(this.state.month, year)
-    this.setState({day, dayText: String(day), year, yearText: String(year)}, this.triggerChange)
+  increaseYear(howMuch) {
+    this.setYear(this.state.year + 1)
+  },
+
+  decreaseYear(howMuch) {
+    this.setYear(this.state.year - 1)
   },
 
   onYearKeyDown(e) {
-    if (e.key == 'ArrowUp') {
+    var key = e.key
+    if (key == 'ArrowDown' || key == 'ArrowUp' || key == 'PageDown' || key == 'PageUp') {
       e.preventDefault()
-      this.increaseYear()
-    }
-    else if (e.key == 'ArrowDown') {
-      e.preventDefault()
-      this.decreaseYear()
+      if (key == 'ArrowDown') {
+        this.decreaseYear()
+      }
+      else if (key == 'ArrowUp') {
+        this.increaseYear()
+      }
+      else if (key == 'PageDown') {
+        this.setYear(this.state.year - 10)
+      }
+      else if (key == 'PageUp') {
+        this.setYear(this.state.year + 10)
+      }
     }
   },
 
   onYearChange(e) {
     var yearText = e.target.value
     if (/^\d{4,}$/.test(yearText)) {
-      var year = Number(yearText)
-      var day = this.getAdjustedDay(this.state.month, year)
-      this.setState({day, dayText: String(day), year, yearText}, this.triggerChange)
+      this.setYear(Number(yearText))
     }
     else {
       this.setState({yearText})
