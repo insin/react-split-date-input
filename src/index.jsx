@@ -64,18 +64,18 @@ var SplitDateInput = React.createClass({
   // Month
   // =====
 
-  decreaseMonth() {
-    var month = this.state.month === 0 ? 11 : this.state.month - 1
+  setMonth(month) {
     var day = this.getAdjustedDay(month, this.state.year)
     var monthText = MONTH_NAMES[month]
     this.setState({day, dayText: String(day), month, monthText}, this.triggerChange)
   },
 
+  decreaseMonth() {
+    this.setMonth(this.state.month === 0 ? 11 : this.state.month - 1)
+  },
+
   increaseMonth() {
-    var month = this.state.month === 11 ? 0 : this.state.month + 1
-    var day = this.getAdjustedDay(month, this.state.year)
-    var monthText = MONTH_NAMES[month]
-    this.setState({day, dayText: String(day), month, monthText}, this.triggerChange)
+    this.setMonth(this.state.month === 11 ? 0 : this.state.month + 1)
   },
 
   onMonthBlur(e) {
@@ -87,9 +87,7 @@ var SplitDateInput = React.createClass({
   onMonthChange(e) {
     var monthText = e.target.value
     if (monthText in MONTH_NAME_LOOKUP) {
-      var month = MONTH_NAME_LOOKUP[monthText]
-      var day = this.getAdjustedDay(month)
-      this.setState({day, dayText: String(day), month, monthText}, this.triggerChange)
+      this.setMonth(MONTH_NAME_LOOKUP[monthText])
     }
     else {
       this.setState({monthText})
@@ -97,14 +95,21 @@ var SplitDateInput = React.createClass({
   },
 
   onMonthKeyDown(e) {
-    if ((e.key == 'ArrowDown' || e.key == 'ArrowUp') &&
-        e.target.value in MONTH_NAME_LOOKUP) {
+    var key = e.key
+    if (e.target.value in MONTH_NAME_LOOKUP &&
+        (key == 'ArrowDown' || key == 'ArrowUp' || key =='End' || key == 'Home')) {
       e.preventDefault()
-      if (e.key == 'ArrowUp') {
+      if (key == 'ArrowDown') {
+        this.decreaseMonth()
+      }
+      else if (key == 'ArrowUp') {
         this.increaseMonth()
       }
-      else {
-        this.decreaseMonth()
+      else if (key == 'End') {
+        this.setMonth(11)
+      }
+      else if (key == 'Home') {
+        this.setMonth(0)
       }
     }
   },
