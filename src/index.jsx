@@ -6,7 +6,7 @@ var DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 var MONTH_NAMES = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' ')
 
-var MONTH_NAME_LOOKUP = MONTH_NAMES.reduce((l, m, i) => (l[m] = i, l), {})
+var MONTH_NAME_LOOKUP = MONTH_NAMES.reduce((l, m, i) => (l[m.toLowerCase()] = i, l), {})
 
 function isLeapYear(year) {
   return (year % 4 === 0 && year % 100 !== 0 || year % 400 === 0)
@@ -86,8 +86,8 @@ var SplitDateInput = React.createClass({
 
   onMonthChange(e) {
     var monthText = e.target.value
-    if (monthText in MONTH_NAME_LOOKUP) {
-      this.setMonth(MONTH_NAME_LOOKUP[monthText])
+    if (monthText.toLowerCase() in MONTH_NAME_LOOKUP) {
+      this.setMonth(MONTH_NAME_LOOKUP[monthText.toLowerCase()])
     }
     else {
       this.setState({monthText})
@@ -96,7 +96,7 @@ var SplitDateInput = React.createClass({
 
   onMonthKeyDown(e) {
     var key = e.key
-    if (e.target.value in MONTH_NAME_LOOKUP &&
+    if (e.target.value.toLowerCase() in MONTH_NAME_LOOKUP &&
         (key == 'ArrowDown' || key == 'ArrowUp' || key =='End' || key == 'Home')) {
       e.preventDefault()
       if (key == 'ArrowDown') {
